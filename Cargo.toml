@@ -1,0 +1,25 @@
+[package]
+name = "akasha-subscriber"
+version = "0.1.0"
+edition = "2021"
+description = "A subscriber to generate clash/base64 style proxies-set, can deploy on cloudflare workers"
+repository = "https://github.com/Buer-Nahida/akasha-subscriber"
+license = "AGPL-3.0"
+authors = ["纳西妲 · Nahida <me@nahida.im>"]
+
+[package.metadata.release]
+release = false
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+worker = { version = "0.5.0", features = ["http", "axum"] }
+worker-macros = { version = "0.5.0", features = ["http"] }
+axum = { version = "0.8", default-features = false }
+console_error_panic_hook = "0.1.1"
+serde_yaml_ok = "0.9"
+base64 = "0.22.1"
+reqwest = { version = "0.12.9", features = ["json"] }
+serde = { version = "1.0.215", features = ["derive"] }
+percent-encoding = "2.3.1"
