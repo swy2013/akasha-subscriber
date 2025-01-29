@@ -60,7 +60,11 @@ ports: 443"#,
         let mut res = Response::ok(if query.contains_key("clash") {
             let mut clash_config: Mapping = match query.contains_key("only-proxies") {
                 true => Mapping::new(),
-                false => yaml::from_value(config.remove("clash").unwrap_or(CLASH.into()))?,
+                false => yaml::from_value(
+                    config
+                        .remove("clash")
+                        .unwrap_or_else(|| yaml::from_str(CLASH).unwrap()),
+                )?,
             };
             clash_config.insert("proxies".into(), proxies.into());
             yaml::to_string(&clash_config)?
