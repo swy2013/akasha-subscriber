@@ -35,4 +35,4 @@
 
 截止到2025年01月29日，本项目无法在 Cloudflare Pages 上部署
 
-CLoudflare Worker 部署方式见 [「 部署到 Cloudflare Workers 」](https://github.com/Buer-Nahida/akasha-subscriber/wiki/%E9%83%A8%E7%BD%B2%E5%88%B0-Cloudflare-Worker)
+CLoudflare Worker 部署方式见 [「 部署到 Cloudflare Workers 」](https://github.com/Buer-Nahida/akasha-subscriber/wiki/%E9%83%A8%E7%BD%B2%E5%88%B0-Cloudflare-Workers)
