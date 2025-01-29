@@ -29,11 +29,7 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
 
     let mut url = req.url()?;
 
-    let users: Vec<User> = yaml::from_value(config.remove("users").unwrap_or_else(|| {
-        config
-            .remove("default-path")
-            .expect("Must provide `default-path` or `users`")
-    }))?;
+    let users: Vec<User> = yaml::from_value(config.remove("users").expect("Must provide `users`"))?;
     for user in users {
         if url.path() != user.path() {
             continue;

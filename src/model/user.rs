@@ -3,17 +3,17 @@ use serde_yaml_ok::{Mapping, Value};
 
 #[derive(Serialize, Deserialize)]
 pub struct User {
-    name: Option<String>,
-    password: Option<String>,
+    name: String,
+    password: String,
     path: String,
 }
 impl User {
-    pub const fn name(&self) -> Option<&String> {
-        self.name.as_ref()
+    pub const fn name(&self) -> &String {
+        &self.name
     }
 
-    pub const fn password(&self) -> Option<&String> {
-        self.password.as_ref()
+    pub const fn password(&self) -> &String {
+        &self.password
     }
 
     pub const fn path(&self) -> &String {
@@ -28,20 +28,14 @@ impl User {
             .expect("`type` of proxy must be a string")
         {
             "vless" | "vmess" if proxy.get("uuid").is_none() => {
-                if let Some(password) = self.password() {
-                    proxy.insert("uuid".into(), password.as_str().into());
-                }
+                proxy.insert("uuid".into(), self.password().as_str().into());
             }
             "hysteria2" if proxy.get("password").is_none() => {
-                if let (Some(password), name) =
-                    (self.password(), self.name().unwrap_or(&"user".into()))
-                {
-                    let password = match proxy.remove("no-user-name") {
-                        Some(Value::Bool(true)) => password.into(),
-                        _ => format!("{name}:{password}"),
-                    };
-                    proxy.insert("password".into(), password.into());
-                }
+                let password = match proxy.remove("no-user-name") {
+                    Some(Value::Bool(true)) => self.password(),
+                    _ => &format!("{}:{}", self.name(), self.password()),
+                };
+                proxy.insert("password".into(), password.as_str().into());
             }
             r#type => panic!("Unsupported proxy type: {type}"),
         };
