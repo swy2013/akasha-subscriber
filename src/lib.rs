@@ -52,7 +52,7 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
                 r#"name: "此订阅由github.com/Buer-Nahida/akasha-subscriber虚空订阅器生成"
 server: nahida.im
 type: hysteria2
-ports: 443"#,
+ports: "443""#,
             )?);
         }
         let proxies = proxies.try_into_clash_style_proxies(&user, &query).await?;
