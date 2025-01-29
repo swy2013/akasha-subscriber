@@ -25,6 +25,18 @@ impl TryIntoClashStyleProxies for Vec<Mapping> {
     ) -> Result<ClashStyleProxies> {
         let mut new_proxies = vec![];
         for mut proxy in self {
+            if !proxy
+                .remove("show")
+                .and_then(|v| yaml::from_value::<Vec<String>>(v).ok())
+                .map_or(true, |list| list.contains(user.name()))
+                || proxy
+                    .remove("ignore")
+                    .and_then(|v| yaml::from_value::<Vec<String>>(v).ok())
+                    .map_or(false, |list| list.contains(user.name()))
+            {
+                continue;
+            }
+
             user.insert_password(&mut proxy);
 
             insert_up_and_down(
