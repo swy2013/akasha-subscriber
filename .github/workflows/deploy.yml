@@ -4,6 +4,11 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - .envrc
+      - .gitignore
+      - LICENSE
+      - README.md
   workflow_dispatch:
 
 env:
