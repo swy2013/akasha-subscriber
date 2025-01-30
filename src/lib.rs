@@ -9,7 +9,7 @@ use base64::Engine;
 use default_config::CLASH;
 use model::proxy::{TryIntoClashStyleProxies as _, UrlStyleProxies};
 use model::user::User;
-use model::{Redirect, SubscriptionUserinfo};
+use model::SubscriptionUserinfo;
 use r#type::Result;
 use serde_yaml_ok::{self as yaml, Mapping, Value};
 use std::collections::HashMap;
@@ -87,13 +87,14 @@ ports: "443""#,
         return Ok(res);
     }
 
-    let Redirect {
-        domain,
-        status_code,
-    } = config
-        .remove("redirect")
+    let redirect_domain: Option<String> = config
+        .remove("redirect_domain")
         .and_then(|v| yaml::from_value(v).ok())
-        .unwrap_or_else(|| Redirect::new("nahida.im".into(), 301));
-    url.set_host(domain.as_str().into())?;
+        .unwrap_or_else(|| Some("nahida.im".into()));
+    let status_code = config
+        .remove("status_code")
+        .and_then(|v| yaml::from_value(v).ok())
+        .unwrap_or(301);
+    url.set_host(redirect_domain.as_deref())?;
     Ok(Response::redirect_with_status(url, status_code)?)
 }
