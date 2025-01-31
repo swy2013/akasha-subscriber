@@ -9,6 +9,7 @@ pub async fn query(domain: &str, r#type: &str) -> Result<impl Iterator<Item = St
     .json::<Response>()
     .await?
     .Answer
+    .unwrap_or_default()
     .into_iter()
     .map(|Answer { data }| data))
 }
@@ -16,7 +17,7 @@ pub async fn query(domain: &str, r#type: &str) -> Result<impl Iterator<Item = St
 #[allow(non_snake_case)]
 #[derive(Serialize, Deserialize)]
 struct Response {
-    Answer: Vec<Answer>,
+    Answer: Option<Vec<Answer>>,
 }
 
 #[derive(Serialize, Deserialize)]
