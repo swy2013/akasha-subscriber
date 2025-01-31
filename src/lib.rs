@@ -21,8 +21,7 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
     console_error_panic_hook::set_once();
 
     let mut config: Value =
-        yaml::from_str::<Mapping>(&env::var("CONFIG").expect("Must provide env var `CONFIG`"))?
-            .into();
+        yaml::from_str::<Mapping>(env!["CONFIG", "Must provide env var `CONFIG`"])?.into();
     config.apply_merge()?;
     let config = config
         .as_mapping_mut()
