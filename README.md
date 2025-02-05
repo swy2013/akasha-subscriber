@@ -4,7 +4,17 @@
 这个是一个可以运行在 Cloudflare Workers 上的节点订阅器，可以生成 Base64 和 Mihomo 格式的订阅
 
 > [!WARNING]
-> 目前只支持 Hysteria2 和 Vless 类型的节点，其中 Vless 只有 vless-ws-tls 和 vless-reality-xtls-rprx-vision 两种经过测试，若有其他类型节点需要支持，请打开一个 [请求支持 Issue](https://github.com/Buer-Nahida/akasha-subscriber/issues/new?template=%E8%AF%B7%E6%B1%82%E6%94%AF%E6%8C%81%E6%96%B0%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B.md)
+> 目前只支持以下协议（打钩的是经过测试的），若有其他类型节点需要支持，请打开一个 [请求支持 Issue](https://github.com/Buer-Nahida/akasha-subscriber/issues/new?template=%E8%AF%B7%E6%B1%82%E6%94%AF%E6%8C%81%E6%96%B0%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B.md)
+>
+> - [ ] vless
+>   - [ ] ws
+>   - [x] tls
+>   - [x] tcp
+>   - [x] reality
+>   - [x] xtls-rprx-vision
+> - [x] hysteria2
+> - [ ] ss
+>   - [x] shadowtls
 
 ## 免责声明
 
