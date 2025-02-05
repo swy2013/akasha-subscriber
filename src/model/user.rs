@@ -1,19 +1,19 @@
 use serde::{Deserialize, Serialize};
-use serde_yaml_ok::{Mapping, Value};
+use serde_yaml_ok::{self as yaml, Mapping, Value};
 
 #[derive(Serialize, Deserialize)]
 pub struct User {
     name: String,
     password: String,
+    #[serde(rename = "32bit-password")]
+    threety_two_bit_password: Option<String>,
+    #[serde(rename = "16bit-password")]
+    sixteen_bit_password: Option<String>,
     path: String,
 }
 impl User {
     pub const fn name(&self) -> &String {
         &self.name
-    }
-
-    pub const fn password(&self) -> &String {
-        &self.password
     }
 
     pub const fn path(&self) -> &String {
@@ -28,14 +28,29 @@ impl User {
             .expect("`type` of proxy must be a string")
         {
             "vless" | "vmess" if proxy.get("uuid").is_none() => {
-                proxy.insert("uuid".into(), self.password().as_str().into());
+                proxy.insert("uuid".into(), self.password.as_str().into());
             }
             "hysteria2" if proxy.get("password").is_none() => {
                 let password = match proxy.remove("no-user-name") {
-                    Some(Value::Bool(true)) => self.password(),
-                    _ => &format!("{}:{}", self.name(), self.password()),
+                    Some(Value::Bool(true)) => &self.password,
+                    _ => &format!("{}:{}", self.name(), self.password),
                 };
                 proxy.insert("password".into(), password.as_str().into());
+            }
+            "ss" if proxy.get("password").is_none() => {
+                if let Some(t) = match &*proxy
+                    .get("cipher")
+                    .and_then(|t| yaml::from_value::<String>(t.to_owned()).ok())
+                    .unwrap_or_default()
+                {
+                    "2022-blake3-aes-128-gcm" => self.sixteen_bit_password.as_ref(),
+                    "2022-blake3-aes-256-gcm" | "2022-blake3-chacha20-poly1305" => {
+                        self.threety_two_bit_password.as_ref()
+                    }
+                    _ => Some(&self.password),
+                } {
+                    proxy.insert("password".into(), t.as_str().into());
+                }
             }
             r#type => panic!("Unsupported proxy type: {type}"),
         };
