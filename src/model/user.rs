@@ -27,29 +27,35 @@ impl User {
             .as_str()
             .expect("`type` of proxy must be a string")
         {
-            "vless" | "vmess" if proxy.get("uuid").is_none() => {
-                proxy.insert("uuid".into(), self.password.as_str().into());
+            "vless" | "vmess" => {
+                if proxy.get("uuid").is_none() {
+                    proxy.insert("uuid".into(), self.password.as_str().into());
+                }
             }
-            "hysteria2" if proxy.get("password").is_none() => {
-                let password = match proxy.remove("no-user-name") {
-                    Some(Value::Bool(true)) => &self.password,
-                    _ => &format!("{}:{}", self.name(), self.password),
-                };
-                proxy.insert("password".into(), password.as_str().into());
+            "hysteria2" => {
+                if proxy.get("password").is_none() {
+                    let password = match proxy.remove("no-user-name") {
+                        Some(Value::Bool(true)) => &self.password,
+                        _ => &format!("{}:{}", self.name(), self.password),
+                    };
+                    proxy.insert("password".into(), password.as_str().into());
+                }
             }
-            "ss" if proxy.get("password").is_none() => {
-                if let Some(t) = match &*proxy
-                    .get("cipher")
-                    .and_then(|t| yaml::from_value::<String>(t.to_owned()).ok())
-                    .unwrap_or_default()
-                {
-                    "2022-blake3-aes-128-gcm" => self.sixteen_bit_password.as_ref(),
-                    "2022-blake3-aes-256-gcm" | "2022-blake3-chacha20-poly1305" => {
-                        self.threety_two_bit_password.as_ref()
+            "ss" => {
+                if proxy.get("password").is_none() {
+                    if let Some(t) = match &*proxy
+                        .get("cipher")
+                        .and_then(|t| yaml::from_value::<String>(t.to_owned()).ok())
+                        .unwrap_or_default()
+                    {
+                        "2022-blake3-aes-128-gcm" => self.sixteen_bit_password.as_ref(),
+                        "2022-blake3-aes-256-gcm" | "2022-blake3-chacha20-poly1305" => {
+                            self.threety_two_bit_password.as_ref()
+                        }
+                        _ => Some(&self.password),
+                    } {
+                        proxy.insert("password".into(), t.as_str().into());
                     }
-                    _ => Some(&self.password),
-                } {
-                    proxy.insert("password".into(), t.as_str().into());
                 }
             }
             r#type => panic!("Unsupported proxy type: {type}"),
