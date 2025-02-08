@@ -49,9 +49,7 @@ impl User {
                         .unwrap_or_default()
                     {
                         "2022-blake3-aes-128-gcm" => self.sixteen_bit_password.as_ref(),
-                        "2022-blake3-aes-256-gcm" | "2022-blake3-chacha20-poly1305" => {
-                            self.threety_two_bit_password.as_ref()
-                        }
+                        "2022-blake3-aes-256-gcm" => self.threety_two_bit_password.as_ref(),
                         _ => Some(&self.password),
                     } {
                         proxy.insert("password".into(), t.as_str().into());
