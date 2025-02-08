@@ -43,20 +43,40 @@ impl User {
             }
             "ss" => {
                 if proxy.get("password").is_none() {
-                    if let Some(t) = match &*proxy
+                    if let Some(passwd) = match &*proxy
                         .get("cipher")
                         .and_then(|t| yaml::from_value::<String>(t.to_owned()).ok())
                         .unwrap_or_default()
                     {
-                        "2022-blake3-aes-128-gcm" => self.sixteen_bit_password.as_ref(),
-                        "2022-blake3-aes-256-gcm" => self.threety_two_bit_password.as_ref(),
-                        _ => Some(&self.password),
+                        "2022-blake3-aes-128-gcm" => self
+                            .sixteen_bit_password
+                            .as_ref()
+                            .map(format_password(proxy)),
+                        "2022-blake3-aes-256-gcm" => self
+                            .threety_two_bit_password
+                            .as_ref()
+                            .map(format_password(proxy)),
+
+                        _ => Some(self.password.clone()),
                     } {
-                        proxy.insert("password".into(), t.as_str().into());
+                        proxy.insert("password".into(), passwd.as_str().into());
                     }
                 }
             }
             r#type => panic!("Unsupported proxy type: {type}"),
         };
+    }
+}
+
+fn format_password(proxy: &mut Mapping) -> impl FnMut(&String) -> String + '_ {
+    move |passwd| {
+        format!(
+            "{}:{passwd}",
+            proxy
+                .remove("server-password")
+                .expect("2022-blake3-* use muti-user must provide `server-password`")
+                .as_str()
+                .unwrap()
+        )
     }
 }
