@@ -1,0 +1,49 @@
+name: Bug 反馈
+description: 反馈程序 Bug （中文）
+title: "[BUG] "
+labels: ["bug"]
+body:
+  - type: checkboxes
+    attributes:
+      label: 在提出 Bug 反馈前，我已确定
+      options:
+        - label: 此 Bug 不是因为节点配置错误 / 节点类型不支持 / 配置错误发生的
+          required: true
+        - label: 我的 Worker 没有被 Cloudflare Ban 掉
+          required: true
+        - label: 此 Bug 没有已提出的 Issue
+          required: true
+  - type: textarea
+    attributes:
+      label: 解释
+      description: 这 Bug 是个啥玩意捏
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 复原步骤
+      description: 咋复原的捏
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 日志
+      description: 进入 `Cloudflare 仪表盘 > Workers 和 Pages > [订阅器 Worker] > 日志 > 实时 (若你启用了Worker日志到这就可以了) > 开启日志流` 访问你的订阅链，将输出的日志粘贴到下方
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: wrangler.toml 配置
+      description: 将你的 wrangler.toml 配置粘贴在下面
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: CONFIG 变量
+      description: 将你的配置粘贴在下面，注意抹除隐私信息
+    validations:
+      required: true
