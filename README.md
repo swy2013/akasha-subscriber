@@ -4,16 +4,19 @@
 这个是一个可以运行在 Cloudflare Workers 上的节点订阅器，可以生成 Base64 和 Mihomo 格式的订阅
 
 > [!WARNING]
-> 目前只支持以下协议（打钩的是经过测试的），若有其他类型节点需要支持，请打开一个 [请求支持 Issue](https://github.com/Buer-Nahida/akasha-subscriber/issues/new?template=%E8%AF%B7%E6%B1%82%E6%94%AF%E6%8C%81%E6%96%B0%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B.md) 并**将模板补全，不要只写个标题就交上来，如果你不知如何提问请请先阅读 [提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md) 以免给开发者造成麻烦**
 >
-> - [ ] vless
->   - [ ] ws
+> 提出意见前请看 [计划中的功能 / 节点类型](https://github.com/Buer-Nahida/akasha-subscriber/issues/2)，确保无此类计划再提出！
+>
+> 目前只支持以下协议（未打钩的是未完全支持的），若有其他类型节点需要支持，请打开一个 [请求支持 Issue](https://github.com/Buer-Nahida/akasha-subscriber/issues/new?template=%E8%AF%B7%E6%B1%82%E6%94%AF%E6%8C%81%E6%96%B0%E8%8A%82%E7%82%B9%E7%B1%BB%E5%9E%8B.md) 并**将模板补全，不要只写个标题就交上来，如果你不知如何提问请请先阅读 [提问的智慧](https://github.com/ryanhanwu/How-To-Ask-Questions-The-Smart-Way/blob/main/README-zh_CN.md) 以免给开发者造成麻烦**
+>
+> - [ ] vless（目前只支持以下分支）
+>   - [x] ws
 >   - [x] tls
 >   - [x] tcp
 >   - [x] reality
 >   - [x] xtls-rprx-vision
 > - [x] hysteria2
-> - [ ] ss
+> - [ ] ss（目前只支持以下分支）
 >   - [x] shadowtls
 
 ## 免责声明
