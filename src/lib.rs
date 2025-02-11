@@ -40,7 +40,7 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
         let mut proxies: Vec<Mapping> =
             yaml::from_value(config.remove("proxies").unwrap_or_default())?;
         if config
-            .remove("show-power-by-akasha-subscriber")
+            .remove("show-powered-by-akasha-subscriber")
             .and_then(|flag| flag.as_bool())
             .is_none_or(|flag| flag)
         {
