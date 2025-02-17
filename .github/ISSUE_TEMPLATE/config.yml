@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 社区
+    url: https://github.com/Buer-Nahida/akasha-subscriber/discussions
+    about: 有非技术上的问题？来 Discussions

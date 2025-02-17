@@ -1,0 +1,23 @@
+name: 功能请求
+description: 请求一个新功能（中文）
+title: "[feature request] "
+labels: ["enhancement"]
+body:
+  - type: checkboxes
+    attributes:
+      label: 在提出功能请求前，我已确定
+      options:
+        - label: 确定此功能要达到的效果在现在版本中无法达到
+          required: true
+        - label: 确定此功能没有已经提出的提议 Issue
+          required: true
+  - type: checkboxes
+    attributes:
+      label: 你是否会为此功能贡献代码
+      options:
+        - label: 我会贡献代码
+  - type: textarea
+    attributes:
+      label: 解释你的想法
+    validations:
+      required: true

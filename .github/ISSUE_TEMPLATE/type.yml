@@ -1,0 +1,41 @@
+name: 请求支持新节点类型
+description: 请求支持新节点类型（中文）
+title: "[type request] "
+labels: ["type request"]
+body:
+  - type: checkboxes
+    attributes:
+      label: 在打开此 Issue 前，我已经确定
+      options:
+        - label: 此节点类型未被支持
+          required: true
+        - label: 此类型没有已经提出的支持 Issue
+          required: true
+        - label: 此类型可以生成 Mihomo 格式的配置文件
+          required: false
+        - label: 此类型有统一的 URI Scheme （用于生成 Base64 格式的订阅）
+          required: false
+  - type: textarea
+    attributes:
+      label: 解释
+      description: 这类型是什么捏
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 相关文档
+      description: 告诉我他在 Mihomo Wiki 上的链接，以及 URI Scheme 和官方文档的链接
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Mihomo 配置示例
+      description: 它怎么写成 Mihomo 配置
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: 分享链接示例
+      description: 它怎么写成分享链接
+    validations:
+      required: true

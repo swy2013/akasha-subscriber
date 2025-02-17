@@ -137,7 +137,7 @@ impl TryInto<UrlStyleProxies> for ClashStyleProxies {
                 {
                     "hysteria2" => yaml::from_value::<Hysteria2>(proxy.into())?.into_string(),
                     "vless" => yaml::from_value::<Vless>(proxy.into())?.into_string(),
-                    r#type => panic!("Unsupported proxy type: {type}"),
+                    _ => "".into(),
                 },
             );
         }

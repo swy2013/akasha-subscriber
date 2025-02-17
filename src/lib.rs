@@ -40,16 +40,19 @@ async fn fetch(req: Request, _env: Env, _ctx: Context) -> Result<Response> {
         let mut proxies: Vec<Mapping> =
             yaml::from_value(config.remove("proxies").unwrap_or_default())?;
         if config
-            .remove("show-power-by-akasha-subscriber")
+            .remove("show-powered-by-akasha-subscriber")
             .and_then(|flag| flag.as_bool())
             .is_none_or(|flag| flag)
         {
-            proxies.push(yaml::from_str(
-                r#"name: "此订阅由github.com/Buer-Nahida/akasha-subscriber虚空订阅器生成"
+            proxies.insert(
+                0,
+                yaml::from_str(
+                    r#"name: "此订阅由github.com/Buer-Nahida/akasha-subscriber虚空订阅器生成"
 server: nahida.im
 type: hysteria2
-ports: "443""#,
-            )?);
+port: 443"#,
+                )?,
+            );
         }
         let proxies = proxies.try_into_clash_style_proxies(&user, &query).await?;
 

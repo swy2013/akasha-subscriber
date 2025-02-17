@@ -4,12 +4,10 @@ on:
   push:
     branches:
       - main
-    paths-ignore:
-      - .envrc
-      - .gitignore
-      - .github/ISSUE_TEMPLATE
-      - LICENSE
-      - README.md
+    paths:
+      - src/**
+      - Cargo.*
+      - flake.*
   workflow_dispatch:
 
 env:
